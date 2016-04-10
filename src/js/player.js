@@ -625,12 +625,6 @@ class Player extends Component {
     this.on(this.tech_, 'loadedmetadata', this.updateStyleEl_);
     this.on(this.tech_, 'posterchange', this.handleTechPosterChange_);
 
-    this.usingNativeControls(this.techGet_('controls'));
-
-    if (this.controls() && !this.usingNativeControls()) {
-      this.addTechControlsListeners_();
-    }
-
     // Add the tech element in the DOM if it was not already there
     // Make sure to not insert the original video element if using Html5
     if (this.tech_.el().parentNode !== this.el() && (techName !== 'Html5' || !this.tag)) {
@@ -755,6 +749,12 @@ class Player extends Component {
    * @private
    */
   handleTechReady_() {
+    this.usingNativeControls(this.techGet_('controls'));
+
+    if (this.controls() && !this.usingNativeControls()) {
+      this.addTechControlsListeners_();
+    }
+
     this.triggerReady();
 
     // Keep the same volume as before
