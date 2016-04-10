@@ -90,6 +90,7 @@ class Flash extends Tech {
 
       // Player Settings
       'autoplay': options.autoplay,
+      'controls': options.controls,
       'preload': options.preload,
       'loop': options.loop,
       'muted': options.muted

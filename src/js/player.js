@@ -561,6 +561,7 @@ class Player extends Component {
       'textTracks': this.textTracks_,
       'audioTracks': this.audioTracks_,
       'autoplay': this.options_.autoplay,
+      'controls': this.options_.controls,
       'preload': this.options_.preload,
       'loop': this.options_.loop,
       'muted': this.options_.muted,
