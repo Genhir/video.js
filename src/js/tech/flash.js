@@ -100,6 +100,7 @@ class Flash extends Tech {
 
     // Merge default parames with ones passed in
     let params = assign({
+      'allowfullscreen': true,
       'wmode': 'opaque', // Opaque is needed to overlay controls, but can affect playback performance
       'bgcolor': '#000000' // Using bgcolor prevents a white flash when the object is loading
     }, options.params);
