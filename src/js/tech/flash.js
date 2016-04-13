@@ -80,6 +80,15 @@ class Flash extends Tech {
     // Generate ID for swf object
     let objId = options.techId;
 
+    if (options.accelerated)
+    {
+        // setup params needed for hardware acceleration
+        options.params = assign(options.params||{}, {
+            allowfullscreen: true,
+            wmode: 'direct',
+        });
+    }
+
     // Merge default flashvars with ones passed in to init
     let flashVars = assign({
 
@@ -89,6 +98,7 @@ class Flash extends Tech {
       'errorEventProxyFunction': 'videojs.Flash.onError',
 
       // Player Settings
+      'accelerated': options.accelerated,
       'autoplay': options.autoplay,
       'controls': options.controls,
       'poster': options.poster,
