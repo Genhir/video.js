@@ -24,6 +24,10 @@
   display: block;
 }
 
+.vjs-using-native-controls .vjs-loading-spinner {
+    display: none !important;
+}
+
 .vjs-loading-spinner:before,
 .vjs-loading-spinner:after {
   content: "";
