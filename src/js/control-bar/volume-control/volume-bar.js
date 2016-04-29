@@ -7,6 +7,7 @@ import * as Fn from '../../utils/fn.js';
 
 // Required children
 import VolumeLevel from './volume-level.js';
+import VolumeDisplay from './volume-display.js';
 
 /**
  * The bar that contains the volume level and can be clicked on to adjust the level
@@ -104,7 +105,8 @@ class VolumeBar extends Slider {
 
 VolumeBar.prototype.options_ = {
   children: [
-    'volumeLevel'
+    'volumeLevel',
+    'volumeDisplay',
   ],
   'barName': 'volumeLevel'
 };

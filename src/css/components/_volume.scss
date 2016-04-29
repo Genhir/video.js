@@ -133,3 +133,60 @@
   //  This protects it from external changes to background colors.
   background-color: transparent !important;
 }
+
+
+.video-js .vjs-volume-display {
+  @extend .vjs-icon-circle;
+
+  &:before {
+    display: none;
+  }
+}
+
+// Current Time "tooltip"
+.video-js .vjs-volume-display-tooltip {
+  /* By default this is hidden and only shown when hovering over the progress control */
+  display: none;
+  position: absolute;
+  top: -1em;
+  margin-left: -1em;
+  font-size: 1em;
+  color: #000;
+  padding: 0.5em;
+  @include background-color-with-alpha(#fff, 0.8);
+  @include border-radius(0.3em);
+}
+
+.video-js .vjs-volume-display-tooltip-active {
+  display: block;
+}
+
+.video-js .vjs-volume-bar .vjs-volume-display {
+  display: none;
+  position: absolute;
+  width: 1px;
+  height: 100%;
+  background-color: #000;
+  z-index: 1;
+}
+.vjs-no-flex .vjs-volume-bar .vjs-volume-display {
+  z-index: 0;
+}
+.video-js .vjs-volume-bar:hover .vjs-volume-display {
+  display: block;
+}
+.video-js.vjs-user-inactive .vjs-volume-bar .vjs-volume-display,
+.video-js.vjs-user-inactive .vjs-volume-display-tooltip {
+  visibility: hidden;
+  opacity: 0;
+  $trans: visibility 1.0s, opacity 1.0s;
+  @include transition($trans);
+}
+.video-js.vjs-user-inactive.vjs-no-flex .vjs-volume-bar .vjs-volume-display,
+.video-js.vjs-user-inactive.vjs-no-flex .vjs-volume-display-tooltip {
+  display: none;
+}
+.video-js .vjs-volume-display-tooltip {
+  color: #fff;
+  @include background-color-with-alpha(#000, 0.8);
+}
