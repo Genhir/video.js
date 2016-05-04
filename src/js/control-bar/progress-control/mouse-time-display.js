@@ -72,7 +72,12 @@ class MouseTimeDisplay extends Component {
   }
 
   handleMouseMove(event) {
+    let isPercent = false;
     let duration = this.player_.duration();
+    if (!duration) {
+      isPercent = true;
+      duration = 100;
+    }
     let newTime = this.calculateDistance(event) * duration;
 
     let maxLeft = this.player().controlBar.progressControl.seekBar.width() - this.width();
@@ -84,11 +89,11 @@ class MouseTimeDisplay extends Component {
     let tooltipPosition = event.pageX - Dom.findElPosition(this.tooltip.parentNode).left - tooltipWidth/2;
     tooltipPosition = Math.min(Math.max(0, tooltipPosition), maxTooltipLeft);
 
-    this.update(newTime, position, tooltipPosition);
+    this.update(newTime, position, tooltipPosition, isPercent);
   }
 
-  update(newTime, position, tooltipPosition) {
-    let time = formatTime(newTime, this.player_.duration());
+  update(newTime, position, tooltipPosition, isPercent) {
+    let time = isPercent ? Math.round(newTime) + '%' : formatTime(newTime, this.player_.duration());
 
     this.el().style.left = position + 'px';
     if (this.keepTooltipsInside) {
