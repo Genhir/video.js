@@ -161,12 +161,13 @@
 }
 
 .video-js .vjs-volume-bar .vjs-volume-display {
-  display: none;
   position: absolute;
+  top: 0;
+  z-index: 1;
+  display: none;
   width: 1px;
   height: 100%;
   background-color: #000;
-  z-index: 1;
 }
 .vjs-no-flex .vjs-volume-bar .vjs-volume-display {
   z-index: 0;
