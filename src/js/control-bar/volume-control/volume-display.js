@@ -1,5 +1,5 @@
 /**
- * @file mouse-time-display.js
+ * @file volume-display.js
  */
 import Component from '../../component.js';
 import * as Dom from '../../utils/dom.js';
