@@ -3,6 +3,7 @@
  */
 import Button from '../button.js';
 import Component from '../component.js';
+import * as Fn from '../utils/fn.js';
 
 /**
  * Toggle fullscreen video
@@ -11,6 +12,13 @@ import Component from '../component.js';
  * @class FullscreenToggle
  */
 class FullscreenToggle extends Button {
+  constructor(player, options) {
+    super(player, options);
+
+    player.on('ready', () => {
+      this.player_.on('fullscreenchange', Fn.bind(this, this.updateHint));
+    });
+  }
 
   /**
    * Allow sub components to stack CSS class names
@@ -30,9 +38,22 @@ class FullscreenToggle extends Button {
   handleClick() {
     if (!this.player_.isFullscreen()) {
       this.player_.requestFullscreen();
-      this.controlText('Non-Fullscreen');
     } else {
       this.player_.exitFullscreen();
+    }
+
+    this.updateHint();
+  }
+
+  /**
+   * Update button controlText
+   *
+   * @method update
+   */
+  updateHint() {
+    if (this.player_.isFullscreen()) {
+      this.controlText('Exit fullscreen');
+    } else {
       this.controlText('Fullscreen');
     }
   }
