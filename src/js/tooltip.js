@@ -63,21 +63,21 @@ class Tooltip extends Component {
       this.clearTimeout(this.timeout);
       this.timeout = 0;
     }
-    this.timeout = this.setTimeout(()=>this.hide(), 5000);
+    this.timeout = this.setTimeout(()=>this.hide(), 1000);
     this.show();
   }
 
-  handleLeave() {
+  handleLeave(event) {
     if (this.timeout) {
       this.clearTimeout(this.timeout);
       this.timeout = 0;
     }
-    this.hide();
+    this.timeout = this.setTimeout(()=>this.hide(), 50);
   }
 
   show() {
     this.player_.trigger('tooltipShown');
-    this.player_.on('tooltipShown', Fn.bind(this, this.hide));
+    this.player_.on('tooltipShown', ()=>this.hide());
 
     this.addClass('vjs-tooltip-active');
     this.update();

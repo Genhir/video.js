@@ -86,6 +86,7 @@ class VolumeDisplay extends Component {
   }
 
   handleHover(event) {
+    this.player_.trigger('tooltipShown');
     Dom.addElClass(this.tooltip, this.tooltipClassName + '-active');
   }
 
