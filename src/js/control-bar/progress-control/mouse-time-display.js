@@ -35,7 +35,7 @@ class MouseTimeDisplay extends Component {
       this.addClass('vjs-keep-tooltips-inside');
     }
 
-    this.update(0, 0);
+    this.update(0, 0, 0);
 
     player.on('ready', () => {
       let progressEl = this.player_.controlBar.progressControl.el();
