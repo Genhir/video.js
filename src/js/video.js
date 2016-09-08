@@ -134,6 +134,13 @@ setup.autoSetupTimeout(1, videojs);
 videojs.VERSION = '__VERSION__';
 
 /**
+ * Indicates it's the Hola version of video.js
+ * 
+ * @type {boolean}
+ */
+videojs.HOLA_VERSION = true;
+
+/**
  * The global options object. These are the settings that take effect
  * if no overrides are specified when the player is created.
  *
