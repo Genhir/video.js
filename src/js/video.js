@@ -135,7 +135,7 @@ videojs.VERSION = '__VERSION__';
 
 /**
  * Indicates it's the Hola version of video.js
- * 
+ *
  * @type {boolean}
  */
 videojs.HOLA_VERSION = true;
