@@ -35,25 +35,12 @@ test('should test and toggle volume control on `loadstart`', function(){
   var noop, listeners, player, volumeControl, muteToggle, i;
   noop = function(){};
   listeners = [];
-  player = {
-    id: noop,
-    on: function(event, callback){
-      // don't fire dispose listeners
-      if (event !== 'dispose') {
-        listeners.push(callback);
-      }
-    },
-    ready: noop,
-    volume: function(){
-      return 1;
-    },
-    muted: function(){
-      return false;
-    },
-    tech_: {
-      'featuresVolumeControl': true
-    },
-    reportUserActivity: function(){}
+  player = TestHelpers.makePlayer();
+  player.on = (event, callback) => {
+    // don't fire dispose listeners
+    if (event !== 'dispose') {
+      listeners.push(callback);
+    }
   };
 
   volumeControl = new VolumeControl(player);
