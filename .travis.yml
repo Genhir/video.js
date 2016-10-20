@@ -7,6 +7,9 @@ before_install:
   - sh -e /etc/init.d/xvfb start
 before_script:
   - if [ "$TRAVIS_TAG" ]; then npm run travis:checktag; fi
+script:
+  - npm run build
+  - npm test
 sudo: false
 cache:
   directories:
