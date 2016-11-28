@@ -91,6 +91,7 @@ class Flash extends Tech {
       // Player Settings
       'autoplay': options.autoplay,
       'controls': options.controls,
+      'poster': options.poster,
       'preload': options.preload,
       'loop': options.loop,
       'muted': options.muted
@@ -240,22 +241,6 @@ class Flash extends Tech {
   }
 
   /**
-   * Get poster
-   *
-   * @method poster
-   */
-  poster() {
-    this.el_.vjs_getProperty('poster');
-  }
-
-  /**
-   * Poster images are not handled by the Flash tech so make this a no-op
-   *
-   * @method setPoster
-   */
-  setPoster() {}
-
-  /**
    * Determine if can seek in media
    *
    * @return {TimeRangeObject}
@@ -312,7 +297,7 @@ class Flash extends Tech {
 
 // Create setters and getters for attributes
 const _api = Flash.prototype;
-const _readWrite = 'rtmpConnection,rtmpStream,preload,defaultPlaybackRate,playbackRate,autoplay,loop,mediaGroup,controller,controls,volume,muted,defaultMuted'.split(',');
+const _readWrite = 'rtmpConnection,rtmpStream,preload,defaultPlaybackRate,playbackRate,autoplay,loop,mediaGroup,controller,controls,volume,muted,defaultMuted,poster'.split(',');
 const _readOnly = 'networkState,readyState,initialTime,duration,startOffsetTime,paused,ended,videoWidth,videoHeight'.split(',');
 
 function _createSetter(attr){
