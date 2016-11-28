@@ -57,7 +57,9 @@ class MouseTimeDisplay extends Component {
   handleMouseMove(event) {
     let duration = this.player_.duration();
     let newTime = this.calculateDistance(event) * duration;
+    let maxLeft = this.player().controlBar.progressControl.seekBar.width() - this.width();
     let position = event.pageX - Dom.findElPosition(this.el().parentNode).left;
+    position = Math.min(Math.max(0, position), maxLeft);
 
     this.update(newTime, position);
   }
