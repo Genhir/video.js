@@ -359,7 +359,15 @@ class Html5 extends Tech {
    *
    * @method play
    */
-  play() { this.el_.play(); }
+  play() {
+    const playPromise = this.el_.play();
+
+    // Catch/silence error when a pause interrupts a play request
+    // on browsers which return a promise
+    if (playPromise !== undefined && typeof playPromise.then === 'function') {
+      playPromise.then(null, (e) => {});
+    }
+  }
 
   /**
    * Pause for html5 tech
@@ -503,7 +511,7 @@ class Html5 extends Tech {
     if (video.paused && video.networkState <= video.HAVE_METADATA) {
       // attempt to prime the video element for programmatic access
       // this isn't necessary on the desktop but shouldn't hurt
-      this.el_.play();
+      this.play();
 
       // playing and pausing synchronously during the transition to fullscreen
       // can get iOS ~6.1 devices into a play/pause loop
