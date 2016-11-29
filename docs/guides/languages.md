@@ -59,7 +59,7 @@ NOTE: These need to be added after the core Video.js script.
 ```html
 <head>
 <script>
-  videojs.options.flash.swf = '../node_modules/videojs-swf/dist/video-js.swf';
+  videojs.options.flash.swf = '../node_modules/@hola.org/videojs-swf/dist/video-js.swf';
   videojs.addLanguage('es', {
     "Play": "Reproducción",
     "Pause": "Pausa",

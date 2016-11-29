@@ -37,7 +37,8 @@ module.exports = function(grunt) {
       }],
       ['browserify-versionify', {
         placeholder: '__SWF_VERSION__',
-        version: pkg.dependencies['videojs-swf']
+        version: pkg.dependencies['@hola.org/videojs-swf'].match(
+          />=([^ ]+)/)[1]
       }]
     ]
   };
