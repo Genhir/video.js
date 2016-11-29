@@ -23,8 +23,7 @@ class VolumeDisplay extends Component {
     this.update(0, 0, 0);
 
     player.on('ready', () => {
-      this.tooltipParent = player.controlBar.progressControl;
-      this.tooltipParent.el().appendChild(this.tooltip);
+      player.controlBar.progressControl.el().appendChild(this.tooltip);
 
       this.parent = player.controlBar.volumeMenuButton.volumeBar;
       this.on(this.parent.el(), 'mousemove', throttle(Fn.bind(this, this.handleMouseMove), 25));
@@ -75,10 +74,12 @@ class VolumeDisplay extends Component {
     let position = event.pageX - Dom.findElPosition(this.el().parentNode).left;
     position = Math.min(Math.max(0, position), maxLeft);
 
-
-    let minTooltipLeft = Dom.findElPosition(this.parent.el()).left - Dom.findElPosition(this.tooltipParent.el()).left;
+    let tooltipWidth = this.tooltip.offsetWidth;
+    let tooltipParentLeft = Dom.findElPosition(this.tooltip.parentNode).left;
+    let minTooltipLeft = Dom.findElPosition(this.parent.el()).left - tooltipParentLeft - tooltipWidth/2;
     let maxTooltipLeft = minTooltipLeft + this.parent.width();
-    let tooltipPosition = event.pageX - Dom.findElPosition(this.tooltipParent.el()).left;
+
+    let tooltipPosition = event.pageX - tooltipParentLeft - tooltipWidth/2;
     tooltipPosition = Math.min(Math.max(minTooltipLeft, tooltipPosition), maxTooltipLeft);
 
     this.update(newValue, position, tooltipPosition);

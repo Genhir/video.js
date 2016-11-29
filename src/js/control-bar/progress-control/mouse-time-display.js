@@ -38,7 +38,9 @@ class MouseTimeDisplay extends Component {
     this.update(0, 0);
 
     player.on('ready', () => {
-      this.on(player.controlBar.progressControl.el(), 'mousemove', throttle(Fn.bind(this, this.handleMouseMove), 25));
+      let progressEl = this.player_.controlBar.progressControl.el();
+      progressEl.appendChild(this.tooltip);
+      this.on(progressEl, 'mousemove', throttle(Fn.bind(this, this.handleMouseMove), 25));
     });
   }
 
@@ -49,27 +51,46 @@ class MouseTimeDisplay extends Component {
    * @method createEl
    */
   createEl() {
-    return super.createEl('div', {
+    this.tooltip = Dom.createEl('div', {
+      className: 'vjs-mouse-display-tooltip'
+    });
+    let el = super.createEl('div', {
       className: 'vjs-mouse-display'
     });
+    return el;
+  }
+
+  dispose(){
+    if (this.tooltip.parentNode) {
+      this.tooltip.parentNode.removeChild(this.tooltip);
+    }
+
+    Dom.removeElData(this.tooltip);
+    this.tooltip = null;
+
+    super.dispose();
   }
 
   handleMouseMove(event) {
     let duration = this.player_.duration();
     let newTime = this.calculateDistance(event) * duration;
+
     let maxLeft = this.player().controlBar.progressControl.seekBar.width() - this.width();
     let position = event.pageX - Dom.findElPosition(this.el().parentNode).left;
     position = Math.min(Math.max(0, position), maxLeft);
 
-    this.update(newTime, position);
+    let tooltipWidth = this.tooltip.offsetWidth;
+    let maxTooltipLeft = this.tooltip.parentNode.offsetWidth - tooltipWidth;
+    let tooltipPosition = event.pageX - Dom.findElPosition(this.tooltip.parentNode).left - tooltipWidth/2;
+    tooltipPosition = Math.min(Math.max(0, tooltipPosition), maxTooltipLeft);
+
+    this.update(newTime, position, tooltipPosition);
   }
 
-  update(newTime, position) {
+  update(newTime, position, tooltipPosition) {
     let time = formatTime(newTime, this.player_.duration());
 
     this.el().style.left = position + 'px';
-    this.el().setAttribute('data-current-time', time);
-
     if (this.keepTooltipsInside) {
       let clampedPosition = this.clampPosition_(position);
       let difference = position - clampedPosition + 1;
@@ -77,7 +98,7 @@ class MouseTimeDisplay extends Component {
       let tooltipWidthHalf = tooltipWidth / 2;
 
       this.tooltip.innerHTML = time;
-      this.tooltip.style.right = `-${tooltipWidthHalf - difference}px`;
+      this.tooltip.style.left = tooltipPosition + 'px';
     }
   }
 
