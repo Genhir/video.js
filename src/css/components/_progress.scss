@@ -40,8 +40,8 @@
 
 // Also show the current time tooltip
 .video-js .vjs-progress-control:hover .vjs-time-tooltip,
-.video-js .vjs-progress-control:hover .vjs-mouse-display:after,
-.video-js .vjs-progress-control:hover .vjs-play-progress:after {
+.video-js .vjs-progress-control:hover .vjs-play-progress:after,
+.video-js .vjs-progress-control:hover .vjs-mouse-display-tooltip {
   font-family: $text-font-family;
   visibility: visible;
   font-size: 0.6em;
@@ -87,8 +87,8 @@
 // Current Time "tooltip"
 // By default this is hidden and only shown when hovering over the progress control
 .video-js .vjs-time-tooltip,
-.video-js .vjs-mouse-display:after,
-.video-js .vjs-play-progress:after {
+.video-js .vjs-play-progress:after,
+.video-js .vjs-mouse-display-tooltip {
   visibility: hidden;
   pointer-events: none;
   position: absolute;
@@ -159,18 +159,18 @@
   display: block;
 }
 .video-js.vjs-user-inactive .vjs-progress-control .vjs-mouse-display,
-.video-js.vjs-user-inactive .vjs-progress-control .vjs-mouse-display:after {
+.video-js.vjs-user-inactive .vjs-progress-control .vjs-mouse-display-tooltip {
   visibility: hidden;
   opacity: 0;
   $trans: visibility 1.0s, opacity 1.0s;
   @include transition($trans);
 }
 .video-js.vjs-user-inactive.vjs-no-flex .vjs-progress-control .vjs-mouse-display,
-.video-js.vjs-user-inactive.vjs-no-flex .vjs-progress-control .vjs-mouse-display:after {
+.video-js.vjs-user-inactive.vjs-no-flex .vjs-progress-control .vjs-mouse-display-tooltip {
   display: none;
 }
 .vjs-mouse-display .vjs-time-tooltip,
-.video-js .vjs-progress-control .vjs-mouse-display:after {
+.video-js .vjs-progress-control .vjs-mouse-display-tooltip {
   color: #fff;
   @include background-color-with-alpha(#000, 0.8);
 }
