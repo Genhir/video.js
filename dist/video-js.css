@@ -138,11 +138,11 @@
   .vjs-icon-cog:before {
     content: "\f110"; }
 
-.vjs-icon-circle, .video-js .vjs-mouse-display, .video-js .vjs-play-progress, .video-js .vjs-volume-level {
+.vjs-icon-circle, .video-js .vjs-mouse-display, .video-js .vjs-play-progress, .video-js .vjs-volume-level, .video-js .vjs-volume-display {
   font-family: VideoJS;
   font-weight: normal;
   font-style: normal; }
-  .vjs-icon-circle:before, .video-js .vjs-mouse-display:before, .video-js .vjs-play-progress:before, .video-js .vjs-volume-level:before {
+  .vjs-icon-circle:before, .video-js .vjs-mouse-display:before, .video-js .vjs-play-progress:before, .video-js .vjs-volume-level:before, .video-js .vjs-volume-display:before {
     content: "\f111"; }
 
 .vjs-icon-circle-outline {
@@ -424,6 +424,27 @@ body.vjs-full-window {
   top: 0.5em;
   z-index: 2; }
 
+.video-js .vjs-tooltip {
+  position: absolute;
+  top: -3em;
+  left: 0;
+  z-index: 10;
+  display: none;
+  padding: 6px 8px 8px 8px;
+  -webkit-border-radius: 0.3em;
+  -moz-border-radius: 0.3em;
+  border-radius: 0.3em;
+  background-color: #2B333F;
+  background-color: rgba(43, 51, 63, 0.7);
+  color: #fff;
+  font-size: 0.9em;
+  font-family: Arial, Helvetica, sans-serif;
+  white-space: nowrap;
+  pointer-events: none; }
+
+.video-js .vjs-tooltip-active {
+  display: block; }
+
 .vjs-menu-button {
   cursor: pointer; }
 
@@ -472,6 +493,9 @@ body.vjs-full-window {
   margin: 0 0 0.3em 0;
   font-weight: bold;
   cursor: default; }
+
+.vjs-control .vjs-menu {
+  text-shadow: none; }
 
 .vjs-menu-button-popup .vjs-menu {
   display: none;
@@ -681,8 +705,8 @@ body.vjs-full-window {
  ginormous. If you'd like to enable the current time tooltip all the time, this should be disabled
  to avoid a weird hitch when you roll off the hover. */
 .video-js .vjs-progress-control:hover .vjs-time-tooltip,
-.video-js .vjs-progress-control:hover .vjs-mouse-display:after,
-.video-js .vjs-progress-control:hover .vjs-play-progress:after {
+.video-js .vjs-progress-control:hover .vjs-play-progress:after,
+.video-js .vjs-progress-control:hover .vjs-mouse-display-tooltip {
   font-family: Arial, Helvetica, sans-serif;
   visibility: visible;
   font-size: 0.6em; }
@@ -712,8 +736,8 @@ body.vjs-full-window {
     font-size: 0.9em; }
 
 .video-js .vjs-time-tooltip,
-.video-js .vjs-mouse-display:after,
-.video-js .vjs-play-progress:after {
+.video-js .vjs-play-progress:after,
+.video-js .vjs-mouse-display-tooltip {
   visibility: hidden;
   pointer-events: none;
   position: absolute;
@@ -773,7 +797,7 @@ body.vjs-full-window {
   display: block; }
 
 .video-js.vjs-user-inactive .vjs-progress-control .vjs-mouse-display,
-.video-js.vjs-user-inactive .vjs-progress-control .vjs-mouse-display:after {
+.video-js.vjs-user-inactive .vjs-progress-control .vjs-mouse-display-tooltip {
   visibility: hidden;
   opacity: 0;
   -webkit-transition: visibility 1s, opacity 1s;
@@ -782,11 +806,11 @@ body.vjs-full-window {
   transition: visibility 1s, opacity 1s; }
 
 .video-js.vjs-user-inactive.vjs-no-flex .vjs-progress-control .vjs-mouse-display,
-.video-js.vjs-user-inactive.vjs-no-flex .vjs-progress-control .vjs-mouse-display:after {
+.video-js.vjs-user-inactive.vjs-no-flex .vjs-progress-control .vjs-mouse-display-tooltip {
   display: none; }
 
 .vjs-mouse-display .vjs-time-tooltip,
-.video-js .vjs-progress-control .vjs-mouse-display:after {
+.video-js .vjs-progress-control .vjs-mouse-display-tooltip {
   color: #fff;
   background-color: #000;
   background-color: rgba(0, 0, 0, 0.8); }
@@ -905,6 +929,59 @@ body.vjs-full-window {
 
 .vjs-volume-menu-button.vjs-menu-button-inline .vjs-menu-content {
   background-color: transparent !important; }
+
+.video-js .vjs-volume-display:before {
+  display: none; }
+
+.video-js .vjs-volume-display-tooltip {
+  /* By default this is hidden and only shown when hovering over the progress control */
+  display: none;
+  position: absolute;
+  top: -1em;
+  font-size: 1em;
+  color: #000;
+  padding: 0.5em;
+  background-color: #fff;
+  background-color: rgba(255, 255, 255, 0.8);
+  -webkit-border-radius: 0.3em;
+  -moz-border-radius: 0.3em;
+  border-radius: 0.3em; }
+
+.video-js .vjs-volume-display-tooltip-active {
+  display: block; }
+
+.video-js .vjs-volume-bar .vjs-volume-display {
+  position: absolute;
+  top: 0;
+  z-index: 1;
+  display: none;
+  width: 1px;
+  height: 100%;
+  background-color: #000; }
+
+.vjs-no-flex .vjs-volume-bar .vjs-volume-display {
+  z-index: 0; }
+
+.video-js .vjs-volume-bar:hover .vjs-volume-display {
+  display: block; }
+
+.video-js.vjs-user-inactive .vjs-volume-bar .vjs-volume-display,
+.video-js.vjs-user-inactive .vjs-volume-display-tooltip {
+  visibility: hidden;
+  opacity: 0;
+  -webkit-transition: visibility 1s, opacity 1s;
+  -moz-transition: visibility 1s, opacity 1s;
+  -o-transition: visibility 1s, opacity 1s;
+  transition: visibility 1s, opacity 1s; }
+
+.video-js.vjs-user-inactive.vjs-no-flex .vjs-volume-bar .vjs-volume-display,
+.video-js.vjs-user-inactive.vjs-no-flex .vjs-volume-display-tooltip {
+  display: none; }
+
+.video-js .vjs-volume-display-tooltip {
+  color: #fff;
+  background-color: #000;
+  background-color: rgba(0, 0, 0, 0.8); }
 
 .vjs-poster {
   display: inline-block;
@@ -1104,6 +1181,9 @@ video::-webkit-media-text-track-display {
 .vjs-seeking .vjs-loading-spinner,
 .vjs-waiting .vjs-loading-spinner {
   display: block; }
+
+.vjs-using-native-controls .vjs-loading-spinner {
+  display: none !important; }
 
 .vjs-loading-spinner:before,
 .vjs-loading-spinner:after {
