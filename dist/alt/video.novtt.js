@@ -6449,12 +6449,12 @@ var SeekBar = (function (_Slider) {
    */
 
   SeekBar.prototype.handleMouseDown = function handleMouseDown(event) {
-    _Slider.prototype.handleMouseDown.call(this, event);
-
     this.player_.scrubbing(true);
 
     this.videoWasPlaying = !this.player_.paused();
     this.player_.pause();
+
+    _Slider.prototype.handleMouseDown.call(this, event);
   };
 
   /**
