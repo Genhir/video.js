@@ -11687,7 +11687,9 @@ var Player = (function (_Component) {
       // Otherwise call method now
     } else {
         try {
-          this.tech_[method](arg);
+          if (this.tech_) {
+            this.tech_[method](arg);
+          }
         } catch (e) {
           _utilsLogJs2['default'](e);
           throw e;
