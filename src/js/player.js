@@ -1235,7 +1235,9 @@ class Player extends Component {
     // Otherwise call method now
     } else {
       try {
-        this.tech_[method](arg);
+        if (this.tech_) {
+          this.tech_[method](arg);
+        }
       } catch(e) {
         log(e);
         throw e;
