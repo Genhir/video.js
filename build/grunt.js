@@ -190,7 +190,19 @@ module.exports = function(grunt) {
       fonts: { cwd: 'node_modules/videojs-font/fonts/', src: ['*'], dest: 'build/temp/font/', expand: true, filter: 'isFile' },
       swf:   { cwd: 'node_modules/videojs-swf/dist/', src: 'video-js.swf', dest: 'build/temp/', expand: true, filter: 'isFile' },
       ie8:   { cwd: 'node_modules/videojs-ie8/dist/', src: ['**/**'], dest: 'build/temp/ie8/', expand: true, filter: 'isFile' },
-      dist:  { cwd: 'build/temp/', src: ['**/**', '!test*'], dest: 'dist/', expand: true, filter: 'isFile' },
+      dist:  {
+        cwd: 'build/temp/',
+        src: ['**/**', '!test*'],
+        dest: 'dist/',
+        expand: true,
+        filter: 'isFile',
+        options: {
+          // remove inline source maps created for global module which cause bugs
+          process: function (content) {
+            return content.replace(/\/\/# sourceMappingURL=data.*/g, '');
+          },
+        },
+      },
       examples: { cwd: 'docs/examples/', src: ['**/**'], dest: 'dist/examples/', expand: true, filter: 'isFile' }
     },
     cssmin: {
