@@ -16213,25 +16213,7 @@ Html5.canControlPlaybackRate = function () {
  * @return {Boolean}
  */
 Html5.supportsNativeTextTracks = function () {
-  var supportsTextTracks;
-
-  // Figure out native text track support
-  // If mode is a number, we cannot change it because it'll disappear from view.
-  // Browsers with numeric modes include IE10 and older (<=2013) samsung android models.
-  // Firefox isn't playing nice either with modifying the mode
-  // TODO: Investigate firefox: https://github.com/videojs/video.js/issues/1862
-  supportsTextTracks = !!Html5.TEST_VID.textTracks;
-  if (supportsTextTracks && Html5.TEST_VID.textTracks.length > 0) {
-    supportsTextTracks = typeof Html5.TEST_VID.textTracks[0]['mode'] !== 'number';
-  }
-  if (supportsTextTracks && browser.IS_FIREFOX) {
-    supportsTextTracks = false;
-  }
-  if (supportsTextTracks && !('onremovetrack' in Html5.TEST_VID.textTracks)) {
-    supportsTextTracks = false;
-  }
-
-  return supportsTextTracks;
+  return browser.IS_ANY_SAFARI;
 };
 
 /*
@@ -20207,6 +20189,11 @@ exports.IS_CHROME = IS_CHROME;
 var IS_IE8 = /MSIE\s8\.0/.test(USER_AGENT);
 
 exports.IS_IE8 = IS_IE8;
+var IS_SAFARI = /Safari/i.test(USER_AGENT) && !IS_CHROME && !IS_ANDROID && !IS_EDGE;
+exports.IS_SAFARI = IS_SAFARI;
+var IS_ANY_SAFARI = IS_SAFARI || IS_IOS;
+
+exports.IS_ANY_SAFARI = IS_ANY_SAFARI;
 var TOUCH_ENABLED = !!('ontouchstart' in _globalWindow2['default'] || _globalWindow2['default'].DocumentTouch && _globalDocument2['default'] instanceof _globalWindow2['default'].DocumentTouch);
 exports.TOUCH_ENABLED = TOUCH_ENABLED;
 var BACKGROUND_SIZE_SUPPORTED = ('backgroundSize' in _globalDocument2['default'].createElement('video').style);
