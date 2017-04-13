@@ -3295,10 +3295,6 @@ var _utilsToTitleCaseJs = _dereq_('./utils/to-title-case.js');
 
 var _utilsToTitleCaseJs2 = _interopRequireDefault(_utilsToTitleCaseJs);
 
-var _objectAssign = _dereq_('object.assign');
-
-var _objectAssign2 = _interopRequireDefault(_objectAssign);
-
 var _utilsMergeOptionsJs = _dereq_('./utils/merge-options.js');
 
 var _utilsMergeOptionsJs2 = _interopRequireDefault(_utilsMergeOptionsJs);
@@ -4523,8 +4519,11 @@ var Component = (function () {
     this.on('touchstart', function (event) {
       // If more than one finger, don't consider treating this as a click
       if (event.touches.length === 1) {
-        // Copy the touches object to prevent modifying the original
-        firstTouch = _objectAssign2['default']({}, event.touches[0]);
+        // Copy pageX/pageY from the object
+        firstTouch = {
+          pageX: event.touches[0].pageX,
+          pageY: event.touches[0].pageY
+        };
         // Record start time so we can detect a tap vs. "touch and hold"
         touchStart = new Date().getTime();
         // Reset couldBeTap tracking
@@ -4562,7 +4561,7 @@ var Component = (function () {
     this.on('touchend', function (event) {
       firstTouch = null;
       // Proceed only if the touchmove/leave/cancel event didn't happen
-      if (couldBeTap === true) {
+      if (couldBeTap === true && event.cancelable) {
         // Measure how long the touch lasted
         var touchTime = new Date().getTime() - touchStart;
 
@@ -4820,7 +4819,7 @@ Component.registerComponent('Component', Component);
 exports['default'] = Component;
 module.exports = exports['default'];
 
-},{"./utils/dom.js":144,"./utils/events.js":145,"./utils/fn.js":146,"./utils/guid.js":148,"./utils/log.js":149,"./utils/merge-options.js":150,"./utils/to-title-case.js":153,"global/window":8,"object.assign":53}],67:[function(_dereq_,module,exports){
+},{"./utils/dom.js":144,"./utils/events.js":145,"./utils/fn.js":146,"./utils/guid.js":148,"./utils/log.js":149,"./utils/merge-options.js":150,"./utils/to-title-case.js":153,"global/window":8}],67:[function(_dereq_,module,exports){
 /**
  * @file audio-track-button.js
  */
