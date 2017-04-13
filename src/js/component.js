@@ -1217,7 +1217,7 @@ class Component {
     this.on('touchend', function(event) {
       firstTouch = null;
       // Proceed only if the touchmove/leave/cancel event didn't happen
-      if (couldBeTap === true) {
+      if (couldBeTap === true && event.cancelable) {
         // Measure how long the touch lasted
         const touchTime = new Date().getTime() - touchStart;
 
