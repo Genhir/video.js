@@ -6352,6 +6352,8 @@ var _utilsFnJs = _dereq_('../../utils/fn.js');
 
 var Fn = _interopRequireWildcard(_utilsFnJs);
 
+var _utilsBrowserJs = _dereq_('../../utils/browser.js');
+
 var _utilsFormatTimeJs = _dereq_('../../utils/format-time.js');
 
 var _utilsFormatTimeJs2 = _interopRequireDefault(_utilsFormatTimeJs);
@@ -6517,9 +6519,14 @@ var SeekBar = (function (_Slider) {
 })(_sliderSliderJs2['default']);
 
 SeekBar.prototype.options_ = {
-  children: ['loadProgressBar', 'mouseTimeDisplay', 'playProgressBar'],
+  children: ['loadProgressBar', 'playProgressBar'],
   'barName': 'playProgressBar'
 };
+
+// MouseTimeDisplay tooltips should not be added to a player on mobile devices or IE8
+if ((!_utilsBrowserJs.IE_VERSION || _utilsBrowserJs.IE_VERSION > 8) && !_utilsBrowserJs.IS_IOS && !_utilsBrowserJs.IS_ANDROID) {
+  SeekBar.prototype.options_.children.splice(1, 0, 'mouseTimeDisplay');
+}
 
 SeekBar.prototype.playerEvent = 'timeupdate';
 
@@ -6527,7 +6534,7 @@ _componentJs2['default'].registerComponent('SeekBar', SeekBar);
 exports['default'] = SeekBar;
 module.exports = exports['default'];
 
-},{"../../component.js":66,"../../slider/slider.js":119,"../../utils/fn.js":146,"../../utils/format-time.js":147,"./load-progress-bar.js":76,"./play-progress-bar.js":78,"./tooltip-progress-bar.js":81,"global/window":8,"object.assign":53}],81:[function(_dereq_,module,exports){
+},{"../../component.js":66,"../../slider/slider.js":119,"../../utils/browser.js":141,"../../utils/fn.js":146,"../../utils/format-time.js":147,"./load-progress-bar.js":76,"./play-progress-bar.js":78,"./tooltip-progress-bar.js":81,"global/window":8,"object.assign":53}],81:[function(_dereq_,module,exports){
 /**
  * @file play-progress-bar.js
  */
