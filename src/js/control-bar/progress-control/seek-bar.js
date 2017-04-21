@@ -8,6 +8,7 @@ import LoadProgressBar from './load-progress-bar.js';
 import PlayProgressBar from './play-progress-bar.js';
 import TooltipProgressBar from './tooltip-progress-bar.js';
 import * as Fn from '../../utils/fn.js';
+import {IE_VERSION, IS_IOS, IS_ANDROID} from '../../utils/browser.js';
 import formatTime from '../../utils/format-time.js';
 import assign from 'object.assign';
 
@@ -158,11 +159,15 @@ class SeekBar extends Slider {
 SeekBar.prototype.options_ = {
   children: [
     'loadProgressBar',
-    'mouseTimeDisplay',
     'playProgressBar'
   ],
   'barName': 'playProgressBar'
 };
+
+// MouseTimeDisplay tooltips should not be added to a player on mobile devices or IE8
+if ((!IE_VERSION || IE_VERSION > 8) && !IS_IOS && !IS_ANDROID) {
+  SeekBar.prototype.options_.children.splice(1, 0, 'mouseTimeDisplay');
+}
 
 SeekBar.prototype.playerEvent = 'timeupdate';
 
