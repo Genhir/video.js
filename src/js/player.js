@@ -1226,11 +1226,6 @@ class Player extends Component {
    * @method techCall_
    */
   techCall_(method, arg) {
-    // Allows to rewrite calls (e.g. to redirect play/pause calls to Ads plugin)
-    if (this.hola && this.hola.tech_call && this.hola.tech_call(method, arg)) {
-      return;
-    }
-
     // If it's not ready yet, call method when it is
     if (this.tech_ && !this.tech_.isReady_) {
       this.tech_.ready(function(){
