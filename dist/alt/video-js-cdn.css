@@ -617,6 +617,12 @@ body.vjs-full-window {
 .vjs-error .vjs-control-bar {
   display: none !important; }
 
+.video-js:not(.vjs-using-native-controls) video::-webkit-media-controls-panel,
+.video-js:not(.vjs-using-native-controls) video::-webkit-media-controls-panel-container,
+.video-js:not(.vjs-using-native-controls) video::-webkit-media-controls-start-playback-button {
+  display: none !important;
+  -webkit-appearance: none; }
+
 .vjs-audio.vjs-has-started.vjs-user-inactive.vjs-playing .vjs-control-bar {
   opacity: 1;
   visibility: visible; }
