@@ -15191,7 +15191,7 @@ var Html5 = (function (_Tech) {
     // Our goal should be to get the custom controls on mobile solid everywhere
     // so we can remove this all together. Right now this will block custom
     // controls on touch enabled laptops like the Chrome Pixel
-    if (browser.TOUCH_ENABLED && options.nativeControlsForTouch === true || browser.IS_IPHONE || browser.IS_NATIVE_ANDROID) {
+    if ((browser.TOUCH_ENABLED || browser.IS_IPHONE || browser.IS_NATIVE_ANDROID) && options.nativeControlsForTouch === true) {
       this.setControls(true);
     }
 
