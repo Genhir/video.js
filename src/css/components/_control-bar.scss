@@ -45,6 +45,14 @@ $ie8screen: "\\0screen";
   display: none !important;
 }
 
+// hide native ios controls when it's not used explicitly
+.video-js:not(.vjs-using-native-controls) video::-webkit-media-controls-panel,
+.video-js:not(.vjs-using-native-controls) video::-webkit-media-controls-panel-container,
+.video-js:not(.vjs-using-native-controls) video::-webkit-media-controls-start-playback-button {
+    display:none !important;
+    -webkit-appearance: none;
+}
+
 // Don't hide the control bar if it's audio
 .vjs-audio.vjs-has-started.vjs-user-inactive.vjs-playing .vjs-control-bar {
   opacity: 1;
