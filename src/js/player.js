@@ -1001,17 +1001,29 @@ class Player extends Component {
   handleTechClick_(event) {
     // We're using mousedown to detect clicks thanks to Flash, but mousedown
     // will also be triggered with right-clicks, so we need to prevent that
-    if (event.button !== 0) return;
-
     // When controls are disabled a click should not toggle playback because
     // the click is considered a control
-    if (this.controls()) {
+    if (event.button !== 0 || !this.controls()) {
+      return;
+    }
+    if (this.techClickTimeout_) {
+      this.clearTimeout(this.techClickTimeout_);
+      this.techClickTimeout_ = null;
+      if (this.isFullscreen()) {
+        this.exitFullscreen();
+      } else {
+        this.requestFullscreen();
+      }
+      return;
+    }
+    this.techClickTimeout_ = this.setTimeout(function() {
+      this.techClickTimeout_ = null;
       if (this.paused()) {
         this.play();
       } else {
         this.pause();
       }
-    }
+    }, 300);
   }
 
   /**
