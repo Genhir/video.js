@@ -1023,6 +1023,8 @@ class Player extends Component {
       } else {
         this.pause();
       }
+      // required by hola-video-skin to show pause/play animation
+      this.trigger('videoclick');
     }, 300);
   }
 
