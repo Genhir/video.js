@@ -11467,6 +11467,8 @@ var Player = (function (_Component) {
       } else {
         this.pause();
       }
+      // required by hola-video-skin to show pause/play animation
+      this.trigger('videoclick');
     }, 300);
   };
 
