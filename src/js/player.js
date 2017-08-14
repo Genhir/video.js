@@ -1013,7 +1013,7 @@ class Player extends Component {
     // will also be triggered with right-clicks, so we need to prevent that
     // When controls are disabled a click should not toggle playback because
     // the click is considered a control
-    if (event.button !== 0 || !this.controls()) {
+    if (event.type === 'mousedown' && event.button !== 0 || !this.controls()) {
       return;
     }
     if (this.techClickTimeout_) {
@@ -1049,8 +1049,12 @@ class Player extends Component {
    * @private
    * @method handleTechTap_
    */
-  handleTechTap_() {
-    this.userActive(!this.userActive());
+  handleTechTap_(event) {
+    if (this.userActive() || this.paused()) {
+      this.handleTechClick_(event);
+    } else {
+      this.userActive(true);
+    }
   }
 
   /**
