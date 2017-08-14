@@ -713,6 +713,7 @@ class Player extends Component {
     // http://stackoverflow.com/questions/1444562/javascript-onclick-event-over-flash-object
     // Any touch events are set to block the mousedown event from happening
     this.on(this.tech_, 'mousedown', this.handleTechClick_);
+    this.on(this.tech_, 'dblclick', this.handleTechDblClick_);
 
     // If the controls were hidden we don't want that to change without a tap event
     // so we'll check if the controls were already showing before reporting user
@@ -741,6 +742,7 @@ class Player extends Component {
     this.off(this.tech_, 'touchmove', this.handleTechTouchMove_);
     this.off(this.tech_, 'touchend', this.handleTechTouchEnd_);
     this.off(this.tech_, 'mousedown', this.handleTechClick_);
+    this.off(this.tech_, 'dblclick', this.handleTechDblClick_);
   }
 
   /**
@@ -991,6 +993,14 @@ class Player extends Component {
     this.duration(this.techGet_('duration'));
   }
 
+  toggleFullscreen_() {
+    if (this.isFullscreen()) {
+      this.exitFullscreen();
+    } else {
+      this.requestFullscreen();
+    }
+  }
+
   /**
    * Handle a click on the media element to play/pause
    *
@@ -1009,11 +1019,9 @@ class Player extends Component {
     if (this.techClickTimeout_) {
       this.clearTimeout(this.techClickTimeout_);
       this.techClickTimeout_ = null;
-      if (this.isFullscreen()) {
-        this.exitFullscreen();
-      } else {
-        this.requestFullscreen();
-      }
+      // IE11 doesn't allow to enter full screen on mousedown
+      if (FullscreenApi.requestFullscreen !== 'msRequestFullscreen')
+          this.toggleFullscreen_();
       return;
     }
     this.techClickTimeout_ = this.setTimeout(function() {
@@ -1026,6 +1034,12 @@ class Player extends Component {
       // required by hola-video-skin to show pause/play animation
       this.trigger('videoclick');
     }, 300);
+  }
+
+  handleTechDblClick_() {
+    // IE11 doesn't allow to enter full screen on mousedown
+    if (FullscreenApi.requestFullscreen === 'msRequestFullscreen')
+      this.toggleFullscreen_();
   }
 
   /**
