@@ -18562,11 +18562,15 @@ var TextTrackDisplay = (function (_Component) {
         }
       }
       if (overrides.fontPercent && overrides.fontPercent !== 1) {
-        var fontSize = _globalWindow2['default'].parseFloat(cueDiv.style.fontSize);
+        var fontSize = cueDiv.getAttribute('data-fontsize');
+        if (!fontSize) {
+          fontSize = cueDiv.style.fontSize;
+          cueDiv.setAttribute('data-fontsize', fontSize);
+        }
+        fontSize = _globalWindow2['default'].parseFloat(fontSize);
         cueDiv.style.fontSize = fontSize * overrides.fontPercent + 'px';
         cueDiv.style.height = 'auto';
         cueDiv.style.top = 'auto';
-        cueDiv.style.bottom = '2px';
       }
       if (overrides.fontFamily && overrides.fontFamily !== 'default') {
         if (overrides.fontFamily === 'small-caps') {
