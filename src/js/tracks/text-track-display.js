@@ -235,11 +235,15 @@ class TextTrackDisplay extends Component {
         }
       }
       if (overrides.fontPercent && overrides.fontPercent !== 1) {
-        const fontSize = window.parseFloat(cueDiv.style.fontSize);
+        let fontSize = cueDiv.getAttribute('data-fontsize');
+        if (!fontSize) {
+          fontSize = cueDiv.style.fontSize;
+          cueDiv.setAttribute('data-fontsize', fontSize);
+        }
+        fontSize = window.parseFloat(fontSize);
         cueDiv.style.fontSize = (fontSize * overrides.fontPercent) + 'px';
         cueDiv.style.height = 'auto';
         cueDiv.style.top = 'auto';
-        cueDiv.style.bottom = '2px';
       }
       if (overrides.fontFamily && overrides.fontFamily !== 'default') {
         if (overrides.fontFamily === 'small-caps') {
