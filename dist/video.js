@@ -8460,8 +8460,8 @@ var VolumeDisplay = (function (_Component) {
 
       _this.parent = player.controlBar.volumeMenuButton.volumeBar;
       _this.on(_this.parent.el(), 'mousemove', _lodashCompatFunctionThrottle2['default'](Fn.bind(_this, _this.handleMouseMove), 25));
-      _this.on(_this.parent.el(), 'mouseover', _lodashCompatFunctionThrottle2['default'](Fn.bind(_this, _this.handleHover), 25));
-      _this.on(_this.parent.el(), 'mouseout', _lodashCompatFunctionThrottle2['default'](Fn.bind(_this, _this.handleLeave), 25));
+      _this.on(_this.parent.el(), 'mouseenter', _lodashCompatFunctionThrottle2['default'](Fn.bind(_this, _this.handleHover), 25));
+      _this.on(_this.parent.el(), 'mouseleave', _lodashCompatFunctionThrottle2['default'](Fn.bind(_this, _this.handleLeave), 25));
     });
   }
 
