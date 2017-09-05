@@ -27,8 +27,8 @@ class VolumeDisplay extends Component {
 
       this.parent = player.controlBar.volumeMenuButton.volumeBar;
       this.on(this.parent.el(), 'mousemove', throttle(Fn.bind(this, this.handleMouseMove), 25));
-      this.on(this.parent.el(), 'mouseover', throttle(Fn.bind(this, this.handleHover), 25));
-      this.on(this.parent.el(), 'mouseout', throttle(Fn.bind(this, this.handleLeave), 25));
+      this.on(this.parent.el(), 'mouseenter', throttle(Fn.bind(this, this.handleHover), 25));
+      this.on(this.parent.el(), 'mouseleave', throttle(Fn.bind(this, this.handleLeave), 25));
     });
   }
 
