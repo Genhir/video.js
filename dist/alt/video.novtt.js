@@ -12915,7 +12915,7 @@ var Player = (function (_Component) {
       }
     };
 
-    var handleMouseDown = function handleMouseDown() {
+    var handleMouseDown = function handleMouseDown(e) {
       handleActivity();
       // For as long as the they are touching the device or have their mouse down,
       // we consider them active even if they're not moving their finger or mouse.
@@ -12924,7 +12924,11 @@ var Player = (function (_Component) {
       // Setting userActivity=true now and setting the interval to the same time
       // as the activityCheck interval (250) should ensure we never miss the
       // next activityCheck
-      mouseInProgress = this.setInterval(handleActivity, 250);
+      if (e.target.nodeName !== 'IFRAME' || e.isTrusted) {
+        // do not set interval for events that come from google ima sdk iframe
+        // because mouseup may be missing
+        mouseInProgress = this.setInterval(handleActivity, 250);
+      }
     };
 
     var handleMouseUp = function handleMouseUp(event) {
