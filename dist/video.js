@@ -22862,6 +22862,12 @@ videojs.appendContent = Dom.appendContent;
  */
 videojs.insertContent = Dom.insertContent;
 
+/**
+ * Export the Dom utilities for use in external plugins
+ * and Tech's
+ */
+videojs.dom = Dom;
+
 /*
  * Custom Universal Module Definition (UMD)
  *
