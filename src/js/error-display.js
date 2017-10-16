@@ -40,6 +40,19 @@ class ErrorDisplay extends ModalDialog {
   }
 
   /**
+   * Opens modal dialog only for error codes not configured for ignore.
+   */
+  open() {
+    let error = this.player().error(), ignore = this.options_.ignoreErr;
+    if (error && (ignore===true ||
+        typeof ignore==='number' && ignore===error.code ||
+        ignore instanceof Array && ignore.indexOf(error.code)>=0)) {
+        return this;
+    }
+    return super.open();
+  }
+
+  /**
    * Generates the modal content based on the player error.
    *
    * @return {String|Null}
@@ -53,7 +66,8 @@ class ErrorDisplay extends ModalDialog {
 ErrorDisplay.prototype.options_ = mergeOptions(ModalDialog.prototype.options_, {
   fillAlways: true,
   temporary: false,
-  uncloseable: true
+  uncloseable: true,
+  ignoreErr: false
 });
 
 Component.registerComponent('ErrorDisplay', ErrorDisplay);
