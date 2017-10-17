@@ -139,6 +139,10 @@ module.exports = function forEach (obj, fn, ctx) {
 
 
 },{}],5:[function(_dereq_,module,exports){
+'use strict';
+
+/* eslint no-invalid-this: 1 */
+
 var ERROR_MESSAGE = 'Function.prototype.bind called on incompatible ';
 var slice = Array.prototype.slice;
 var toStr = Object.prototype.toString;
@@ -189,6 +193,8 @@ module.exports = function bind(that) {
 };
 
 },{}],6:[function(_dereq_,module,exports){
+'use strict';
+
 var implementation = _dereq_('./implementation');
 
 module.exports = Function.prototype.bind || implementation;
@@ -8862,6 +8868,19 @@ var ErrorDisplay = (function (_ModalDialog) {
   };
 
   /**
+   * Opens modal dialog only for error codes not configured for ignore.
+   */
+
+  ErrorDisplay.prototype.open = function open() {
+    var error = this.player().error(),
+        ignore = this.options_.ignoreErr;
+    if (error && (ignore === true || typeof ignore === 'number' && ignore === error.code || ignore instanceof Array && ignore.indexOf(error.code) >= 0)) {
+      return this;
+    }
+    return _ModalDialog.prototype.open.call(this);
+  };
+
+  /**
    * Generates the modal content based on the player error.
    *
    * @return {String|Null}
@@ -8878,7 +8897,8 @@ var ErrorDisplay = (function (_ModalDialog) {
 ErrorDisplay.prototype.options_ = _utilsMergeOptions2['default'](_modalDialog2['default'].prototype.options_, {
   fillAlways: true,
   temporary: false,
-  uncloseable: true
+  uncloseable: true,
+  ignoreErr: false
 });
 
 _component2['default'].registerComponent('ErrorDisplay', ErrorDisplay);
@@ -20671,10 +20691,10 @@ function removeElData(el) {
  */
 
 function hasElClass(element, classToCheck) {
+  throwIfWhitespace(classToCheck);
   if (element.classList) {
     return element.classList.contains(classToCheck);
   } else {
-    throwIfWhitespace(classToCheck);
     return classRegExp(classToCheck).test(element.className);
   }
 }
