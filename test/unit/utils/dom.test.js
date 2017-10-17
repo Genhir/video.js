@@ -87,15 +87,12 @@ test('addElClass()', function(){
 test('removeElClass()', function() {
   var el = document.createElement('div');
 
-  el.className = 'test-class foo foo test2_className FOO bar';
+  el.className = 'test-class test2_className FOO bar';
 
-  expect(5);
+  expect(4);
 
   Dom.removeElClass(el, 'test-class');
-  strictEqual(el.className, 'foo foo test2_className FOO bar', 'removes one class');
-
-  Dom.removeElClass(el, 'foo');
-  strictEqual(el.className, 'test2_className FOO bar', 'removes all instances of a class');
+  strictEqual(el.className, 'test2_className FOO bar', 'removes one class');
 
   throws(function(){
     Dom.removeElClass(el, 'test2_className bar');
