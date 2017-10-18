@@ -45,11 +45,20 @@ class ErrorDisplay extends ModalDialog {
   open() {
     let error = this.player().error(), ignore = this.options_.ignoreErr;
     if (error && (ignore===true ||
-        typeof ignore==='number' && ignore===error.code ||
-        ignore instanceof Array && ignore.indexOf(error.code)>=0)) {
-        return this;
+      typeof ignore==='number' && ignore===error.code ||
+      ignore instanceof Array && ignore.indexOf(error.code)>=0)) {
+      this.player().addClass('vjs-error-hidden');
+      return this;
     }
     return super.open();
+  }
+
+  /**
+   * Override close of modal dialog for proper player uninit.
+   */
+  close() {
+    this.player().removeClass('vjs-error-hidden');
+    return super.close();
   }
 
   /**
