@@ -8879,9 +8879,19 @@ var ErrorDisplay = (function (_ModalDialog) {
     var error = this.player().error(),
         ignore = this.options_.ignoreErr;
     if (error && (ignore === true || typeof ignore === 'number' && ignore === error.code || ignore instanceof Array && ignore.indexOf(error.code) >= 0)) {
+      this.player().addClass('vjs-error-hidden');
       return this;
     }
     return _ModalDialog.prototype.open.call(this);
+  };
+
+  /**
+   * Override close of modal dialog for proper player uninit.
+   */
+
+  ErrorDisplay.prototype.close = function close() {
+    this.player().removeClass('vjs-error-hidden');
+    return _ModalDialog.prototype.close.call(this);
   };
 
   /**
