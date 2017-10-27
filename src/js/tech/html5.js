@@ -1005,6 +1005,20 @@ Html5.canControlVolume = function(){
 };
 
 /*
+ * Check if the muted can be changed in this browser/device.
+ *
+ * @return {Boolean}
+ */
+Html5.canControlMuted = function(){
+  Html5.TEST_VID.muted = false;
+  if (Html5.TEST_VID.muted) {
+    return false;
+  }
+  Html5.TEST_VID.muted = true;
+  return Html5.TEST_VID.muted;
+};
+
+/*
  * Check if playbackRate is supported in this browser/device.
  *
  * @return {Boolean}
@@ -1082,6 +1096,13 @@ Html5.Events = [
  * @type {Boolean}
  */
 Html5.prototype['featuresVolumeControl'] = Html5.canControlVolume();
+
+/*
+ * Set the tech's muted control support status
+ *
+ * @type {Boolean}
+ */
+Html5.prototype['featuresMutedControl'] = Html5.canControlMuted();
 
 /*
  * Set the tech's playbackRate support status

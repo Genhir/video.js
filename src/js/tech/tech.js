@@ -659,6 +659,7 @@ var createTrackHelper = function(self, kind, label, language, options={}) {
 };
 
 Tech.prototype.featuresVolumeControl = true;
+Tech.prototype.featuresMutedControl = true;
 
 // Resizing plugins using request fullscreen reloads the plugin
 Tech.prototype.featuresFullscreenResize = false;
