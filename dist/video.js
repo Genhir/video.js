@@ -143,10 +143,6 @@ module.exports = function forEach (obj, fn, ctx) {
 
 
 },{}],5:[function(_dereq_,module,exports){
-'use strict';
-
-/* eslint no-invalid-this: 1 */
-
 var ERROR_MESSAGE = 'Function.prototype.bind called on incompatible ';
 var slice = Array.prototype.slice;
 var toStr = Object.prototype.toString;
@@ -197,8 +193,6 @@ module.exports = function bind(that) {
 };
 
 },{}],6:[function(_dereq_,module,exports){
-'use strict';
-
 var implementation = _dereq_('./implementation');
 
 module.exports = Function.prototype.bind || implementation;
@@ -5407,14 +5401,14 @@ var MuteToggle = (function (_Button) {
     this.on(player, 'volumechange', this.update);
 
     // hide mute toggle if the current tech doesn't support volume control
-    if (player.tech_ && player.tech_['featuresVolumeControl'] === false) {
+    if (player.tech_ && player.tech_['featuresMutedControl'] === false) {
       this.addClass('vjs-hidden');
     }
 
     this.on(player, 'loadstart', function () {
       this.update(); // We need to update the button to account for a default muted state.
 
-      if (player.tech_['featuresVolumeControl'] === false) {
+      if (player.tech_['featuresMutedControl'] === false) {
         this.addClass('vjs-hidden');
       } else {
         this.removeClass('vjs-hidden');
@@ -8698,11 +8692,11 @@ var VolumeMenuButton = (function (_PopupButton) {
 
     // hide mute toggle if the current tech doesn't support volume control
     function updateVisibility() {
-      if (player.tech_ && player.tech_['featuresVolumeControl'] === false) {
-        this.addClass('vjs-hidden');
-      } else {
-        this.removeClass('vjs-hidden');
-      }
+      var noMuted = player.tech_ && !player.tech_['featuresMutedControl'];
+      var noVolume = player.tech_ && !player.tech_['featuresVolumeControl'];
+      this.toggleClass('vjs-hidden', noMuted);
+      this.toggleClass('vjs-no-volume', noVolume);
+      this.menuContent.toggleClass('vjs-hidden', noVolume);
     }
 
     updateVisibility.call(this);
@@ -16277,6 +16271,20 @@ Html5.canControlVolume = function () {
 };
 
 /*
+ * Check if the muted can be changed in this browser/device.
+ *
+ * @return {Boolean}
+ */
+Html5.canControlMuted = function () {
+  Html5.TEST_VID.muted = false;
+  if (Html5.TEST_VID.muted) {
+    return false;
+  }
+  Html5.TEST_VID.muted = true;
+  return Html5.TEST_VID.muted;
+};
+
+/*
  * Check if playbackRate is supported in this browser/device.
  *
  * @return {Boolean}
@@ -16330,6 +16338,13 @@ Html5.Events = ['loadstart', 'suspend', 'abort', 'error', 'emptied', 'stalled', 
  * @type {Boolean}
  */
 Html5.prototype['featuresVolumeControl'] = Html5.canControlVolume();
+
+/*
+ * Set the tech's muted control support status
+ *
+ * @type {Boolean}
+ */
+Html5.prototype['featuresMutedControl'] = Html5.canControlMuted();
 
 /*
  * Set the tech's playbackRate support status
@@ -17350,6 +17365,7 @@ var createTrackHelper = function createTrackHelper(self, kind, label, language) 
 };
 
 Tech.prototype.featuresVolumeControl = true;
+Tech.prototype.featuresMutedControl = true;
 
 // Resizing plugins using request fullscreen reloads the plugin
 Tech.prototype.featuresFullscreenResize = false;
