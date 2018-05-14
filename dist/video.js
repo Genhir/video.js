@@ -20289,6 +20289,19 @@ exports.IS_CHROME = IS_CHROME;
 var IS_IE8 = /MSIE\s8\.0/.test(USER_AGENT);
 
 exports.IS_IE8 = IS_IE8;
+var IE_VERSION = (function () {
+  var result = /MSIE\s(\d+)\.\d/.exec(USER_AGENT);
+  var version = result && parseFloat(result[1]);
+
+  if (!version && /Trident\/7.0/i.test(USER_AGENT) && /rv:11.0/.test(USER_AGENT)) {
+    // IE 11 has a different user agent string than other IE versions
+    version = 11.0;
+  }
+
+  return version;
+})();
+
+exports.IE_VERSION = IE_VERSION;
 var IS_SAFARI = /Safari/i.test(USER_AGENT) && !IS_CHROME && !IS_ANDROID && !IS_EDGE;
 exports.IS_SAFARI = IS_SAFARI;
 var IS_ANY_SAFARI = IS_SAFARI || IS_IOS;
