@@ -12149,8 +12149,9 @@ var Player = (function (_Component) {
     var fsApi = _fullscreenApiJs2['default'];
 
     this.isFullscreen(true);
+    var fullscreenDisabled = _globalDocument2['default'][fsApi.fullscreenEnabled] === false;
 
-    if (fsApi.requestFullscreen) {
+    if (fsApi.requestFullscreen && !fullscreenDisabled) {
       // the browser supports going fullscreen at the element level so we can
       // take the controls fullscreen as well as the video
 
@@ -12171,7 +12172,7 @@ var Player = (function (_Component) {
       }));
 
       this.el_[fsApi.requestFullscreen]();
-    } else if (this.tech_.supportsFullScreen()) {
+    } else if (this.tech_.supportsFullScreen() && !fullscreenDisabled) {
       // we can't take the video.js controls fullscreen but we can go fullscreen
       // with native controls
       this.techCall_('enterFullScreen');
@@ -12198,11 +12199,12 @@ var Player = (function (_Component) {
   Player.prototype.exitFullscreen = function exitFullscreen() {
     var fsApi = _fullscreenApiJs2['default'];
     this.isFullscreen(false);
+    var fullscreenDisabled = _globalDocument2['default'][fsApi.fullscreenEnabled] === false;
 
     // Check for browser element fullscreen support
-    if (fsApi.requestFullscreen) {
+    if (fsApi.requestFullscreen && !fullscreenDisabled) {
       _globalDocument2['default'][fsApi.exitFullscreen]();
-    } else if (this.tech_.supportsFullScreen()) {
+    } else if (this.tech_.supportsFullScreen() && !fullscreenDisabled) {
       this.techCall_('exitFullScreen');
     } else {
       this.exitFullWindow();
@@ -12232,6 +12234,12 @@ var Player = (function (_Component) {
 
     // Apply fullscreen styles
     Dom.addElClass(_globalDocument2['default'].body, 'vjs-full-window');
+
+    var parent = this.el_.parentNode;
+    while (parent && parent !== _globalDocument2['default'].body) {
+      Dom.addElClass(parent, 'vjs-fake-fullscreen-parent');
+      parent = parent.parentNode;
+    }
 
     this.trigger('enterFullWindow');
   };
@@ -12268,6 +12276,12 @@ var Player = (function (_Component) {
 
     // Remove fullscreen styles
     Dom.removeElClass(_globalDocument2['default'].body, 'vjs-full-window');
+
+    var parent = this.el_.parentNode;
+    while (parent && parent !== _globalDocument2['default'].body) {
+      Dom.removeElClass(parent, 'vjs-fake-fullscreen-parent');
+      parent = parent.parentNode;
+    }
 
     // Resize the box, controller, and poster to original sizes
     // this.positionAll();

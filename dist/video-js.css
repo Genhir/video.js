@@ -304,14 +304,19 @@ body.vjs-full-window {
   height: 100%;
   overflow-y: auto; }
 
+.vjs-fake-fullscreen-parent {
+  transform: none !important;
+  overflow: visible !important;
+  z-index: 2147483647 !important; }
+
 .vjs-full-window .video-js.vjs-fullscreen {
-  position: fixed;
+  position: fixed !important;
   overflow: hidden;
   z-index: 1000;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  right: 0; }
+  left: 0 !important;
+  top: 0 !important;
+  bottom: 0 !important;
+  right: 0 !important; }
 
 .video-js.vjs-fullscreen {
   width: 100% !important;
