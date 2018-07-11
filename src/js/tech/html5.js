@@ -184,7 +184,7 @@ class Html5 extends Tech {
     }
 
     // Update specific tag settings, in case they were overridden
-    let settingsAttrs = ['autoplay','preload','loop','muted'];
+    let settingsAttrs = ['autoplay','preload','loop','muted', 'playsinline'];
     for (let i = settingsAttrs.length - 1; i >= 0; i--) {
       const attr = settingsAttrs[i];
       let overwriteAttrs = {};
@@ -881,6 +881,43 @@ class Html5 extends Tech {
       if (track === tracks[i] || track === tracks[i].track) {
         this.el().removeChild(tracks[i]);
       }
+    }
+  }
+
+  /**
+   * Get the value of `playsinline` from the media element. `playsinline` indicates
+   * to the browser that non-fullscreen playback is preferred when fullscreen
+   * playback is the native default, such as in iOS Safari.
+   *
+   * @method Html5#playsinline
+   * @return {boolean}
+   *         - The value of `playsinline` from the media element.
+   *         - True indicates that the media should play inline.
+   *         - False indicates that the media should not play inline.
+   *
+   * @see [Spec]{@link https://html.spec.whatwg.org/#attr-video-playsinline}
+   */
+  playsinline() {
+    return this.el_.hasAttribute('playsinline');
+  }
+
+  /**
+   * Set the value of `playsinline` from the media element. `playsinline` indicates
+   * to the browser that non-fullscreen playback is preferred when fullscreen
+   * playback is the native default, such as in iOS Safari.
+   *
+   * @method Html5#setPlaysinline
+   * @param {boolean} playsinline
+   *         - True indicates that the media should play inline.
+   *         - False indicates that the media should not play inline.
+   *
+   * @see [Spec]{@link https://html.spec.whatwg.org/#attr-video-playsinline}
+   */
+  setPlaysinline(value) {
+    if (value) {
+      this.el_.setAttribute('playsinline', 'playsinline');
+    } else {
+      this.el_.removeAttribute('playsinline');
     }
   }
 
